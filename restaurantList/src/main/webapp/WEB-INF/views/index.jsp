@@ -6,6 +6,6 @@
 <title>메인</title>
 </head>
 <body>
-hi
+${test}
 </body>
 </html>
