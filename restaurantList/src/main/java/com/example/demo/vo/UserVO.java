@@ -3,6 +3,9 @@ package com.example.demo.vo;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.Min;
 
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonPOJOBuilder;
+
 //import com.example.demo.annotaion.Birthday;
 
 import lombok.Builder;
@@ -11,7 +14,8 @@ import lombok.Setter;
 
 @Getter
 @Setter
-@Builder
+@Builder(builderClassName = "UserVOBuilder", toBuilder = true)
+@JsonDeserialize(builder = UserVO.UserVOBuilder.class)
 public class UserVO {
 	private String name;
 	
@@ -25,4 +29,8 @@ public class UserVO {
 	
 	//@Birthday(regexp = "yyyyMMdd")
 	private String birthday;
+	
+	@JsonPOJOBuilder(withPrefix = "") public static class UserVOBuilder { 
+		
+	}
 }

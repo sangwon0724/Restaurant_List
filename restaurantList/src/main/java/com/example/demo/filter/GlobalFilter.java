@@ -16,11 +16,16 @@ import org.springframework.web.util.ContentCachingResponseWrapper;
 
 import com.example.demo.vo.UserVO;
 
+import lombok.extern.slf4j.Slf4j;
+
+@Slf4j
 @WebFilter(urlPatterns = {"/apitest_filter_post", "/apitest_filter_delete"})
 public class GlobalFilter implements Filter{
 
 	@Override
 	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
+        log.info("Start Filter");
+        
 		ContentCachingRequestWrapper wrappingRequest = new ContentCachingRequestWrapper((HttpServletRequest)request);
 		ContentCachingResponseWrapper wrappingResponse = new ContentCachingResponseWrapper((HttpServletResponse) response);
 
@@ -31,5 +36,7 @@ public class GlobalFilter implements Filter{
         System.out.println(new String(wrappingResponse.getContentAsByteArray(),"UTF-8"));
         
         wrappingResponse.copyBodyToResponse();
+        
+        log.info("End Filter");
 	}
 }

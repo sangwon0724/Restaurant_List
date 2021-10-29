@@ -20,6 +20,7 @@ import javax.servlet.http.HttpServletResponse;
 public class AuthInterceptor implements HandlerInterceptor {
 	@Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
+        log.info("Start Interceptor");
 		//url 가져오는 방법
 		String url = request.getRequestURI();
 		
@@ -35,9 +36,12 @@ public class AuthInterceptor implements HandlerInterceptor {
         //쿼리 가져오는 방법 : uri.getQuery()
         if(validAuthUser){
         	/* --- 쿼리 관련 로직 또는 권한 관련 로직 --- */
+            log.info("End interceptor");
     		return true;
         }
 
+        log.info("End Interceptor");
+        
         return true;
     }
 
