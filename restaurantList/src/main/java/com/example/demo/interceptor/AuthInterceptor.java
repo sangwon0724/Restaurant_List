@@ -1,6 +1,9 @@
 package com.example.demo.interceptor;
 
 import com.example.demo.annotaion.AuthUser;
+
+import lombok.extern.slf4j.Slf4j;
+
 import org.springframework.stereotype.Component;
 import org.springframework.web.method.HandlerMethod;
 import org.springframework.web.servlet.HandlerInterceptor;
@@ -12,6 +15,7 @@ import java.net.URI;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+@Slf4j
 @Component
 public class AuthInterceptor implements HandlerInterceptor {
 	@Override
@@ -25,7 +29,7 @@ public class AuthInterceptor implements HandlerInterceptor {
 		//어노테이션 존재 여부 확인
         boolean validAuthUser = checkValidAccessAnnotation(handler, AuthUser.class);
         
-        System.out.println("annotation check : " + validAuthUser);
+        log.info("annotation check : " + validAuthUser);
         
         //요청들어온 handler에 어노테이션 존재 => 요청을 통해 가려는 url을 담당하는 컨트롤러에 해당 어노테이션이 존재
         //쿼리 가져오는 방법 : uri.getQuery()
@@ -44,14 +48,14 @@ public class AuthInterceptor implements HandlerInterceptor {
     	
     	//resource check - ex) html, css, javascript
         if(handler instanceof ResourceHttpRequestHandler){
-            System.out.println("리소스 요청 class "+clazz.getName());
+        	log.info("리소스 요청 class "+clazz.getName());
             return true;
         }
 
         //annotation check
         HandlerMethod handlerMethod = (HandlerMethod) handler;
         if(null != handlerMethod.getMethodAnnotation(clazz) || null != handlerMethod.getBeanType().getAnnotation(clazz)){
-            System.out.println("어노테이션 체크 class "+clazz.getName());
+        	log.info("어노테이션 체크 class "+clazz.getName());
             return true;
         }
 
