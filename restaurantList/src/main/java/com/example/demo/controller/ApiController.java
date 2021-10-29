@@ -47,26 +47,26 @@ public class ApiController {
 		
 		//Java Object To Json
 		UserVO user = UserVO.builder().name("HongGilDong").age(25).email("hong@naver.com").birthday("19970229").phoneNumber("0001112222").build();
-        String javaObjectToJson = objectMapper.writeValueAsString(user);
-        result.put("Java Obejct To Json : ", javaObjectToJson);
-
+		String javaObjectToJson = objectMapper.writeValueAsString(user);
+		result.put("Java Obejct To Json : ", javaObjectToJson);
+		
 		//Json To Java Object
-        String jsonString = "{\"name\":\"jsonString\",\"age\":25,\"email\":\"jsonString@naver.com\",\"phoneNumber\":\"0001112222\",\"birthday\":\"19970229\"}";
-        UserVO jsonToJavaObject = objectMapper.readValue(jsonString, UserVO.class);
-        result.put("Json To Java Obejct : ", jsonToJavaObject.toString());
-        
-        //Mapping Json Array to Java List
-        String jsonStringA = "{\"name\":\"jsonStringA\",\"age\":25,\"email\":\"jsonStringA@naver.com\",\"phoneNumber\":\"0001112222\",\"birthday\":\"19970229\"}";
-        String jsonStringB = "{\"name\":\"jsonStringB\",\"age\":25,\"email\":\"jsonStringB@naver.com\",\"phoneNumber\":\"0001112222\",\"birthday\":\"19970229\"}";
-        String jsonArray = "["+jsonStringA+","+jsonStringB+"]";
-        List<UserVO> users = objectMapper.readValue(jsonArray, new TypeReference<List<UserVO>>(){});
-        result.put("Mapping Json Array to Java List : ", users);
-        
-        //Mapping Json data to a Map
-        String jsonStringForMap = "{\"name\":\"jsonStringForMap\",\"age\":25,\"email\":\"jsonStringForMap@naver.com\",\"phoneNumber\":\"0001112222\",\"birthday\":\"19970229\"}";
-        HashMap<String, Object> map = objectMapper.readValue(jsonStringForMap, new TypeReference<HashMap<String,Object>>(){});
-        result.put("Mapping Json data to a Map : ", map);
-        
+		String jsonString = "{\"name\":\"jsonString\",\"age\":25,\"email\":\"jsonString@naver.com\",\"phoneNumber\":\"0001112222\",\"birthday\":\"19970229\"}";
+		UserVO jsonToJavaObject = objectMapper.readValue(jsonString, UserVO.class);
+		result.put("Json To Java Obejct : ", jsonToJavaObject.toString());
+		        
+		//Mapping Json Array to Java List
+		String jsonStringA = "{\"name\":\"jsonStringA\",\"age\":25,\"email\":\"jsonStringA@naver.com\",\"phoneNumber\":\"0001112222\",\"birthday\":\"19970229\"}";
+		String jsonStringB = "{\"name\":\"jsonStringB\",\"age\":25,\"email\":\"jsonStringB@naver.com\",\"phoneNumber\":\"0001112222\",\"birthday\":\"19970229\"}";
+		String jsonArray = "["+jsonStringA+","+jsonStringB+"]";
+		List<UserVO> users = objectMapper.readValue(jsonArray, new TypeReference<List<UserVO>>(){});
+		result.put("Mapping Json Array to Java List : ", users);
+		        
+		//Mapping Json data to a Map
+		String jsonStringForMap = "{\"name\":\"jsonStringForMap\",\"age\":25,\"email\":\"jsonStringForMap@naver.com\",\"phoneNumber\":\"0001112222\",\"birthday\":\"19970229\"}";
+		HashMap<String, Object> map = objectMapper.readValue(jsonStringForMap, new TypeReference<HashMap<String,Object>>(){});
+		result.put("Mapping Json data to a Map : ", map);
+		        
 		return result;
 	}
 	
