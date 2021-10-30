@@ -18,10 +18,12 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.demo.annotaion.AuthUser;
 import com.example.demo.service.AsyncService;
+import com.example.demo.service.RestTemplateService;
 import com.example.demo.vo.UserVO;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.type.TypeReference;
@@ -36,6 +38,9 @@ import lombok.extern.slf4j.Slf4j;
 public class ApiController {
 	@Autowired
 	AsyncService asyncService;
+	
+	@Autowired
+	RestTemplateService restTemplateService;
 	
 	//============================================= ObjectMapper ===================================================
 	
@@ -120,4 +125,43 @@ public class ApiController {
     	log.info("/async/completableFuture");
         return asyncService.completableFuture(1000);
     }
+    
+	//============================================= 서버 to 서버 ===================================================
+    
+    @GetMapping("/server_to_server/client/call_server")
+    public Object callServer(@RequestParam String mode) throws Exception {
+    	log.info("/server_to_server/client/call_server");
+    	
+    	Object result = null;
+    	
+    	switch (mode) {
+		case "get":
+			result = restTemplateService.getUser();
+			break;
+		case "post":
+			result = restTemplateService.postUser();
+			break;
+		case "put":
+			restTemplateService.putUser();
+			result=true;
+			break;
+		case "delete":
+			restTemplateService.deleteUser();
+			result=true;
+			break;
+		case "exchange":
+			restTemplateService.exchange();
+			break;
+		}
+    	
+		return result;
+    	
+    }
+    
+	//============================================= 실제 API 연결 ===================================================
+    @GetMapping("/naver/map")
+    public ResponseEntity<String> apiTestNaver(){
+    	return restTemplateService.naver();
+    }
 }
+

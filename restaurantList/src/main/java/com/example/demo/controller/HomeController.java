@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
 public class HomeController {
-	@GetMapping(path="/")
+	@GetMapping("/")
 	public String home(Model model) {
 		System.out.println("메인 입장");
 		model.addAttribute("test","test");
