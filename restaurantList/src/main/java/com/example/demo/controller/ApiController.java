@@ -23,7 +23,10 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.example.demo.annotaion.AuthUser;
 import com.example.demo.service.AsyncService;
+import com.example.demo.service.Calculator;
 import com.example.demo.service.RestTemplateService;
+import com.example.demo.vo.CalculatorReq;
+import com.example.demo.vo.CalculatorRes;
 import com.example.demo.vo.UserVO;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.type.TypeReference;
@@ -37,10 +40,13 @@ import lombok.extern.slf4j.Slf4j;
 @RequestMapping("/api/test")
 public class ApiController {
 	@Autowired
-	AsyncService asyncService;
+	AsyncService asyncService; //비동기 통신
 	
 	@Autowired
-	RestTemplateService restTemplateService;
+	RestTemplateService restTemplateService; //Server To Server
+	
+	@Autowired
+	Calculator calculator; //JUnit
 	
 	//============================================= ObjectMapper ===================================================
 	
@@ -126,7 +132,7 @@ public class ApiController {
         return asyncService.completableFuture(1000);
     }
     
-	//============================================= 서버 to 서버 ===================================================
+	//============================================= Server To Server ===================================================
     
     @GetMapping("/server_to_server/client/call_server")
     public Object callServer(@RequestParam String mode) throws Exception {
@@ -158,7 +164,29 @@ public class ApiController {
     	
     }
     
+	//============================================= JUnit ===================================================
+    
+    @GetMapping("/junit/calculator/sum")
+    public int getApiTestJUnit(CalculatorReq calculatorReq){
+    	 var result = calculator.sum(calculatorReq.getX(), calculatorReq.getY());
+         return result;
+    }
+    
+    @PostMapping("/junit/calculator/sum")
+    public CalculatorRes postApiTestJUnit(@RequestBody CalculatorReq calculatorReq){
+    	CalculatorRes res = new CalculatorRes();
+        int sum = calculator.sum(calculatorReq.getX(), calculatorReq.getY());
+        res.setResult(sum);
+
+        var body = new CalculatorRes.Result();
+        body.setResponseResult(sum);
+
+        res.setBody(body);
+        return res;
+    }
+    
 	//============================================= 실제 API 연결 ===================================================
+    
     @GetMapping("/naver/map")
     public ResponseEntity<String> apiTestNaver(){
     	return restTemplateService.naver();
