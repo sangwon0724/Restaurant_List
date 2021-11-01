@@ -15,6 +15,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -27,16 +28,25 @@ import com.example.demo.service.Calculator;
 import com.example.demo.service.RestTemplateService;
 import com.example.demo.vo.CalculatorReq;
 import com.example.demo.vo.CalculatorRes;
+import com.example.demo.vo.UserRequest;
+import com.example.demo.vo.UserResponse;
 import com.example.demo.vo.UserVO;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiImplicitParam;
+import io.swagger.annotations.ApiImplicitParams;
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiParam;
+import io.swagger.annotations.ApiResponse;
 import lombok.extern.slf4j.Slf4j;
 
 @AuthUser
 @RestController
 @Slf4j
+@Api(tags = {"REST API CONTROLLER"})
 @RequestMapping("/api/test")
 public class ApiController {
 	@Autowired
@@ -183,6 +193,29 @@ public class ApiController {
 
         res.setBody(body);
         return res;
+    }
+    
+	//============================================= Swagger ===================================================
+    
+    @ApiOperation(value = "hello method", notes = "기본적인 인사 GET API")
+    @ApiImplicitParams({
+    	@ApiImplicitParam(name="name", value="사용자 이름"),
+    	@ApiImplicitParam(name="age", value="사용자 나이")
+    })
+    @GetMapping("/swagger/{name}")
+    public String swaggerHello(@PathVariable String name, @RequestParam int age){
+        return "hello";
+    }
+
+    @GetMapping("/swagger/user")
+    public UserResponse getSwaggerUser(UserRequest userRequest){
+        return new UserResponse(userRequest.getName(), userRequest.getAge());
+    }
+
+    @PostMapping("/swagger/user")
+    @ApiResponse(code = 404, message = "not found")
+    public UserResponse postSwaggerUser(@RequestBody UserRequest userRequest){
+        return new UserResponse(userRequest.getName(), userRequest.getAge());
     }
     
 	//============================================= 실제 API 연결 ===================================================
