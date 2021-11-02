@@ -1,7 +1,5 @@
 package com.example.demo.interceptor;
 
-import com.example.demo.annotaion.AuthUser;
-
 import lombok.extern.slf4j.Slf4j;
 
 import org.springframework.stereotype.Component;
@@ -9,6 +7,8 @@ import org.springframework.web.method.HandlerMethod;
 import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.resource.ResourceHttpRequestHandler;
 import org.springframework.web.util.UriComponentsBuilder;
+
+import com.example.demo.annotation.AuthUser;
 
 import java.net.URI;
 

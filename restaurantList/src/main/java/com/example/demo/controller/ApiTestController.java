@@ -22,7 +22,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.example.demo.annotaion.AuthUser;
+import com.example.demo.annotation.AuthUser;
 import com.example.demo.service.AsyncService;
 import com.example.demo.service.Calculator;
 import com.example.demo.service.RestTemplateService;
@@ -46,9 +46,9 @@ import lombok.extern.slf4j.Slf4j;
 @AuthUser
 @RestController
 @Slf4j
-@Api(tags = {"REST API CONTROLLER"})
+@Api(tags = {"REST API TEST CONTROLLER"})
 @RequestMapping("/api/test")
-public class ApiController {
+public class ApiTestController {
 	@Autowired
 	AsyncService asyncService; //비동기 통신
 	

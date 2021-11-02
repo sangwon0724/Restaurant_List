@@ -6,7 +6,7 @@ import java.time.format.DateTimeFormatter;
 import javax.validation.ConstraintValidator;
 import javax.validation.ConstraintValidatorContext;
 
-import com.example.demo.annotaion.Birthday;
+import com.example.demo.annotation.Birthday;
 
 public class BirthdayValidator implements ConstraintValidator<Birthday, String>{
 	private String pattern;
